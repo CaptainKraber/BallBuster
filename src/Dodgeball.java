@@ -30,14 +30,14 @@ public class Dodgeball extends JComponent implements KeyListener {
     long desiredTime = (1000) / FPS;
     //cloakbattery counts how much cloak is left
     //frames counts number of frames
-    int cloakbattery = (int) (FPS) * 5, frames = 0, helper = (int)(WIDTH / (FPS * 1.5));
+    int cloakbattery = (int) (FPS) * 5, frames = 0, helper = (int)(WIDTH / (FPS * 1.5)), enemies, outlines, start;
     //w, h, x, and y are player values respectively
-    int w = WIDTH / 17, h = w, x = WIDTH / 2 - w / 2, y = HEIGHT / 2 - h / 2;
+    int w = WIDTH / 13, h = w, x = WIDTH / 2 - w / 2, y = HEIGHT / 2 - h / 2;
     //up, down, right, left, and cloak control player changes respectively
     //done controls whether entire game quits
     //gameover controls whether or not to display gameover screen
     //retry resets variables to default when pressed and game is over
-    boolean up = false, down = false, right = false, left = false, cloak = false, done = false, retry = false, gameover = false, quit = false;
+    boolean up = false, down = false, right = false, left = false, cloak = false, done = false, retry = false, gameover = false, quit = false, k = false, r = false, o = false, n = false;
     //colors holds 10 random numbers dictating each balls color for 10 different balls each game
     //dires holds 10 random numbers dictating each balls direction for 10 different balls each game
     //enemyx holds 10 random numbers dictating each balls x value for 10 different balls each game
@@ -53,47 +53,19 @@ public class Dodgeball extends JComponent implements KeyListener {
         g.clearRect(0, 0, WIDTH, HEIGHT);
         // GAME DRAWING GOES HERE
         if (!gameover) {
-            //after five seconds, three enemy balls are summoned randomly in screen
+            //after four seconds, three enemy balls are summoned randomly in screen
             if (frames >= FPS * 2 && frames < FPS * 4) {
-                for (int i = 0; i < 3; i++) {
-                    g.setColor(Color.BLACK);
-                    g.drawOval(enemyx[i], enemyy[i], w, h);
-                }
+                spawnballs(0, 3, 0, g);
+            } else if (frames >= FPS * 4 && frames < FPS * 32) {
+                spawnballs(0, 0, 3, g);
+            } else if (frames >= FPS * 32 && frames < FPS * 34) {
+                spawnballs(3, 4, 3, g);
+            } else if (frames >= FPS * 34 && frames < FPS * 62) {
+                spawnballs(0, 0, 4, g);
+            } else if (frames >= FPS * 62 && frames < FPS * 64) {
+                spawnballs(4, 5, 4, g);
             }
-            if (frames >= FPS * 4) {
-                for (int i = 0; i < 3; i++) {
-                    if (colors[i] == 0) {
-                        g.setColor(Color.RED);
-                    } else if (colors[i] == 1) {
-                        g.setColor(Color.GREEN);
-                    } else if (colors[i] == 2) {
-                        g.setColor(Color.ORANGE);
-                    } else {
-                        g.setColor(Color.GRAY);
-                    }
-                    g.fillOval(enemyx[i], enemyy[i], w, h);
-                }
-            }
-            if (frames >= FPS * 32 && frames < FPS * 34) {
-                for (int i = 3; i < 4; i++) {
-                    g.setColor(Color.BLACK);
-                    g.drawOval(enemyx[i], enemyy[i], w, h);
-                }
-            }
-            if (frames >= FPS * 34) {
-                for (int i = 3; i < 4; i++) {
-                    if (colors[i] == 0) {
-                        g.setColor(Color.RED);
-                    } else if (colors[i] == 1) {
-                        g.setColor(Color.GREEN);
-                    } else if (colors[i] == 2) {
-                        g.setColor(Color.ORANGE);
-                    } else {
-                        g.setColor(Color.GRAY);
-                    }
-                    g.fillOval(enemyx[i], enemyy[i], w, h);                 
-                }
-            }
+            
             //changes players colour when cloak is active and isn't empty
             if (cloak && cloakbattery > 0) {
                 g.setColor(Color.BLACK);
@@ -282,7 +254,7 @@ public class Dodgeball extends JComponent implements KeyListener {
             } else if (retry && gameover) {
                 cloakbattery = (int) (FPS) * 5;
                 frames = 0;
-                w = WIDTH / 17;
+                w = WIDTH / 13;
                 h = w;
                 x = WIDTH / 2 - w / 2;
                 y = HEIGHT / 2 - h / 2;
@@ -402,8 +374,23 @@ public class Dodgeball extends JComponent implements KeyListener {
         
         return 0;
     }
-    void spawnballs(int frames) {
-        
+    void spawnballs(int start, int outlines, int enemies, Graphics g) {
+        for (int i = start; i < outlines; i++) {
+            g.setColor(Color.BLACK);
+            g.drawOval(enemyx[i], enemyy[i], w, h);
+        }
+        for (int i = 0; i < enemies; i++) {
+            if (colors[i] == 0) {
+                g.setColor(Color.RED);
+            } else if (colors[i] == 1) {
+                g.setColor(Color.GREEN);
+            } else if (colors[i] == 2) {
+                g.setColor(Color.ORANGE);
+            } else {
+                g.setColor(Color.GRAY);
+            }
+            g.fillOval(enemyx[i], enemyy[i], w, h);
+        }
     }
 }
 
