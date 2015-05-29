@@ -21,8 +21,8 @@ public class Dodgeball extends JComponent implements KeyListener {
     // Height and Width of our game
     //WIDTH must be at least 10* FPS
     //keep WIDTH and HEIGHT in aspect ratio of monitor
-    static final int WIDTH = 1280;
-    static final int HEIGHT = 720;
+    static final int WIDTH = 853;
+    static final int HEIGHT = 480;
     // sets the framerate and delay for our game
     // you just need to select an appropriate framerate
     //FPS must be multiple of 20
@@ -30,7 +30,7 @@ public class Dodgeball extends JComponent implements KeyListener {
     long desiredTime = (1000) / FPS;
     //cloakbattery counts how much cloak is left
     //frames counts number of frames
-    int cloakbattery = (int) (FPS) * 5, frames = 0, helper = (int) (WIDTH / (FPS * 1.5));
+    int cloakbattery = (int) (FPS) * 5, frames = 0, speed = (int) (WIDTH / (FPS * 1.5));
     //w, h, x, and y are player values respectively
     int w = WIDTH / 16, h = w, x = WIDTH / 2 - w / 2, y = HEIGHT / 2 - h / 2;
     //up, down, right, left, and cloak control player changes respectively
@@ -54,23 +54,10 @@ public class Dodgeball extends JComponent implements KeyListener {
         // GAME DRAWING GOES HERE
         //if the game hasn't ended draw player, enemies, cloakbar, and cloakbattery
         if (!gameover) {
-            //changes players colour when cloak is active and isn't empty
-            if (cloak && cloakbattery > 0) {
-                g.setColor(Color.BLACK);
-            } else {
-                g.setColor(Color.BLUE);
-            }
-            //player
-            g.fillOval(x, y, w, h);
-            //diplays percentage of battery remaining and charge meter 
-            g.setColor(Color.DARK_GRAY);
-            g.drawString("Cloak Battery: " + cloakbattery / (FPS / 20) + "%", WIDTH / 2 - 55, HEIGHT - 20);
-            g.fillRect((WIDTH - ((int) (FPS) * 10)) / 2, HEIGHT - 15, cloakbattery * 2, 10);
-            //
             if (frames >= FPS * 2 && frames < FPS * 4) {
-                spawnballs(0, 3, 0, g);
+                spawnballs(0, 1, 0, g);
             } else if (frames >= FPS * 4 && frames < FPS * 22) {
-                spawnballs(0, 0, 3, g);
+                spawnballs(0, 0, 1, g);
             } else if (frames >= FPS * 22 && frames < FPS * 24) {
                 spawnballs(3, 4, 3, g);
             } else if (frames >= FPS * 24 && frames < FPS * 42) {
@@ -100,13 +87,27 @@ public class Dodgeball extends JComponent implements KeyListener {
             } else if (frames >= FPS * 144) {
                 spawnballs(0, 0, 10, g);
             }
-            //if the game is over display GAMEOVER
+            //changes players colour when cloak is active and isn't empty   
+            if (cloak && cloakbattery > 0) {
+                g.setColor(Color.BLACK);
+            } else {
+                g.setColor(Color.BLUE);
+            }
+            //player
+            g.fillOval(x, y, w, h);
+            //diplays percentage of battery remaining and charge meter 
+            g.setColor(Color.DARK_GRAY);
+            g.drawString("Cloak Battery: " + cloakbattery / (FPS / 20) + "%", WIDTH / 2 - 55, HEIGHT - 20);
+            g.fillRect((WIDTH - ((int) (FPS) * 10)) / 2, HEIGHT - 15, cloakbattery * 2, 10);
+            //
+            //if the game has ended display GAMEOVER, time lasted, and the button used to restart
         } else {
             //displays time lasted and which button to use to restart
             g.setColor(Color.DARK_GRAY);
             g.drawString("GAME OVER", WIDTH / 2 - 35, HEIGHT / 2 - 15);
             g.drawString("You lasted " + frames / FPS + " seconds", WIDTH / 2 - 59, HEIGHT / 2);
             g.drawString("Press R to restart", WIDTH / 2 - 49, HEIGHT / 2 + 15);
+            g.drawString("Press Q to quit", WIDTH / 2 - 41, HEIGHT / 2 + 30);
         }
         // GAME DRAWING ENDS HERE
     }
@@ -121,11 +122,12 @@ public class Dodgeball extends JComponent implements KeyListener {
 
         // the main game loop section
         // game will end if you set done = false;
+        //for loops make random integers to determine colors, directions, xs, and ys of the enemies
         for (int i = 0; i < 10; i++) {
             colors[i] = (int) (Math.random() * 4);
         }
         for (int i = 0; i < 10; i++) {
-            directions[i] = (int) (Math.random() * helper * 4);
+            directions[i] = (int) (Math.random() * speed * 4);
         }
         for (int i = 0; i < 10; i++) {
             enemyx[i] = (int) (Math.random() * (WIDTH - w - 100)) + 50;
@@ -190,7 +192,7 @@ public class Dodgeball extends JComponent implements KeyListener {
                     cloakbattery++;
                 }
                 if (frames >= FPS * 4 && frames < FPS * 24) {
-                    ballmovement(0, 3, frames);
+                    ballmovement(0, 1, frames);
                 } else if (frames >= FPS * 24 && frames < FPS * 44) {
                     ballmovement(3, 4, frames);
                 } else if (frames >= FPS * 44 && frames < FPS * 64) {
@@ -208,7 +210,7 @@ public class Dodgeball extends JComponent implements KeyListener {
                 }
                 //for loop stops game when player touches enemy balls one, two, or three without cloak
                 if (frames >= FPS * 4 && frames < FPS * 24) {
-                    playerhitenemy(3);
+                    playerhitenemy(1);
                 } else if (frames >= FPS * 24 && frames < FPS * 44) {
                     playerhitenemy(4);
                 } else if (frames >= FPS * 44 && frames < FPS * 64) {
@@ -224,6 +226,15 @@ public class Dodgeball extends JComponent implements KeyListener {
                 } else if (frames >= FPS * 144) {
                     playerhitenemy(10);
                 }
+                if (frames >= FPS * 4 && frames < FPS * 24) {
+                    enemyhitenemy(3);
+                } else if (frames >= FPS * 24 && frames < FPS * 44) {
+                } else if (frames >= FPS * 44 && frames < FPS * 64) {
+                } else if (frames >= FPS * 64 && frames < FPS * 84) {
+                } else if (frames >= FPS * 84 && frames < FPS * 104) {
+                } else if (frames >= FPS * 104 && frames < FPS * 124) {
+                } else if (frames >= FPS * 144) {
+                }
             } else if (retry && gameover) {
                 cloakbattery = (int) (FPS) * 5;
                 frames = 0;
@@ -236,7 +247,7 @@ public class Dodgeball extends JComponent implements KeyListener {
                     colors[i] = (int) (Math.random() * 4);
                 }
                 for (int i = 0; i < 10; i++) {
-                    directions[i] = (int) (Math.random() * helper * 4);
+                    directions[i] = (int) (Math.random() * speed * 4);
                 }
                 for (int i = 0; i < 10; i++) {
                     enemyx[i] = (int) (Math.random() * (WIDTH - w - 100)) + 50;
@@ -395,26 +406,26 @@ public class Dodgeball extends JComponent implements KeyListener {
             starttime = 144;
         }
         for (int i = start; i < enemies && frames == FPS * starttime; i++) {
-            for (int j = 0; j < helper; j++) {
+            for (int j = 0; j < speed; j++) {
                 if (directions[i] == j) {
                     dx[i] = ((int) (WIDTH / (FPS * 1.5))) - j;
                     dy[i] = j;
                 }
             }
-            for (int j = 0; j < helper; j++) {
-                if (directions[i] == j + (helper)) {
+            for (int j = 0; j < speed; j++) {
+                if (directions[i] == j + (speed)) {
                     dx[i] = -j;
                     dy[i] = ((int) (WIDTH / (FPS * 1.5))) - j;
                 }
             }
-            for (int j = 0; j < helper; j++) {
-                if (directions[i] == j + (helper * 2)) {
+            for (int j = 0; j < speed; j++) {
+                if (directions[i] == j + (speed * 2)) {
                     dx[i] = (-1 * ((int) (WIDTH / (FPS * 1.5)))) + j;
                     dy[i] = -j;
                 }
             }
-            for (int j = 0; j < helper; j++) {
-                if (directions[i] == j + (helper * 3)) {
+            for (int j = 0; j < speed; j++) {
+                if (directions[i] == j + (speed * 3)) {
                     dx[i] = j;
                     dy[i] = (-1 * ((int) (WIDTH / (FPS * 1.5)))) + j;
                 }
@@ -422,9 +433,17 @@ public class Dodgeball extends JComponent implements KeyListener {
         }
         for (int i = 0; i < enemies; i++) {
             if (enemyx[i] < 0 || enemyx[i] > WIDTH - w) {
+                directions[i] += speed * 2 + Math.abs(dy[i]) * 2;
+                if (directions[i] >= speed * 4) {
+                    directions[i] -= speed * 4;
+                }
                 dx[i] *= -1;
             }
             if (enemyy[i] < 0 || enemyy[i] > HEIGHT - w) {
+                directions[i] += speed * 2 + Math.abs(dx[i]) * 2;
+                if (directions[i] >= speed * 4) {
+                    directions[i] -= speed * 4;
+                }
                 dy[i] *= -1;
             }
         }
@@ -432,6 +451,7 @@ public class Dodgeball extends JComponent implements KeyListener {
             enemyx[i] += dx[i];
             enemyy[i] += dy[i];
         }
+        System.out.println(directions[0]);
     }
 
     boolean playerhitenemy(int enemies) {
@@ -441,5 +461,14 @@ public class Dodgeball extends JComponent implements KeyListener {
             }
         }
         return gameover = false;
+    }
+
+    void enemyhitenemy(int balls) {
+        for (int diff = 1; diff < balls; diff++) {
+            for (int i = 0; i < balls - diff; i++) {
+                if (((enemyx[i] - enemyx[i + 1]) * (enemyx[i] - enemyx[i + 1])) + (((enemyy[i] - enemyy[i + 1]) * (enemyy[i] - enemyy[i + 1]))) < w * w) {
+                }
+            }
+        }
     }
 }
