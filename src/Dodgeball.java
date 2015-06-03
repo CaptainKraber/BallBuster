@@ -32,7 +32,7 @@ public class Dodgeball extends JComponent implements KeyListener {
     //frames counts number of frames
     int cloakbattery = (int) (FPS) * 5, frames = 0, speed = (int) (WIDTH / (FPS * 1.5));
     //w, h, x, and y are player values respectively
-    int w = WIDTH / 10, h = w, x = WIDTH / 2 - w / 2, y = HEIGHT / 2 - h / 2;
+    int w = WIDTH / 20, h = w, x = WIDTH / 2 - w / 2, y = HEIGHT / 2 - h / 2;
     //up, down, right, left, and cloak control player changes respectively
     //done controls whether entire game quits
     //gameover controls whether or not to display gameover screen
@@ -109,8 +109,15 @@ public class Dodgeball extends JComponent implements KeyListener {
             g.drawString("Press R to restart", WIDTH / 2 - 49, HEIGHT / 2 + 15);
             g.drawString("Press Q to quit", WIDTH / 2 - 41, HEIGHT / 2 + 30);
         } else if (!playerstart) {
-            g.fillRect(WIDTH / 2 - 50, HEIGHT / 2 - 20, 100, 10);
-            g.drawString("Press ENTER to begin", WIDTH / 2 - 65, HEIGHT / 2 - 5);
+            g.drawString("Press ENTER to begin", WIDTH / 2 - 62, HEIGHT / 2 - 100);
+            g.drawString("Keep your ball", WIDTH / 4 - 37, HEIGHT / 2 - 4);
+            g.drawString("Away from these balls", WIDTH / 4 - 59, HEIGHT / 2 + w * 5 / 4);
+            g.setColor(Color.BLUE);
+            g.fillOval(WIDTH / 4 - w / 2, HEIGHT / 2, w, h);
+            g.setColor(Color.RED);
+            g.fillOval(WIDTH / 4 - w / 2 - 100, HEIGHT / 2 + w * 5 / 4, w, h);
+            g.setColor(Color.GREEN);
+            g.fillOval(WIDTH / 4 - w / 2 - 50, HEIGHT / 2 + 75, w, h);
         }
         // GAME DRAWING ENDS HERE
     }
@@ -235,7 +242,7 @@ public class Dodgeball extends JComponent implements KeyListener {
             } else if (retry && gameover && playerstart) {
                 cloakbattery = (int) (FPS) * 5;
                 frames = 0;
-                w = WIDTH / 10;
+                w = WIDTH / 20;
                 h = w;
                 x = WIDTH / 2 - w / 2;
                 y = HEIGHT / 2 - h / 2;
@@ -359,12 +366,6 @@ public class Dodgeball extends JComponent implements KeyListener {
             quit = false;
         }
     }
-
-    static int whxy(int w, int h, int x, int y) {
-
-        return 0;
-    }
-
     void spawnballs(int start, int outlines, int enemies, Graphics g) {
         for (int i = start; i < outlines; i++) {
             g.setColor(Color.BLACK);
@@ -436,9 +437,9 @@ public class Dodgeball extends JComponent implements KeyListener {
                 dx[i] = Math.abs(dx[i]) * -1;
             }
             if (enemyy[i] < 0) {
-                dy[i] = Math.abs(dx[i]);
+                dy[i] = Math.abs(dy[i]);
             } else if (enemyy[i] > HEIGHT - w) {
-                dy[i] = Math.abs(dx[i]) * -1;
+                dy[i] = Math.abs(dy[i]) * -1;
             }
         }
         for (int i = 0; i < enemies; i++) {
