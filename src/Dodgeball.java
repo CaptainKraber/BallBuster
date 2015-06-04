@@ -201,44 +201,51 @@ public class Dodgeball extends JComponent implements KeyListener {
                 if (!cloak && cloakbattery < FPS * 5 && frames % 60 == 0) {
                     cloakbattery++;
                 }
-                if (frames >= FPS * 2 && frames < FPS * 32) {
-                    movespawn(true);
-                } else if (frames >= FPS * 32 && frames < FPS * 62 || frames >= FPS * 62 && frames < FPS * 92 || frames >= FPS * 92 && frames < FPS * 122 || frames >= FPS * 122 && frames < FPS * 152 || frames >= FPS * 152 && frames < FPS * 182 || frames >= FPS * 182 && frames < FPS * 212 || frames >= FPS * 212) {
-                    movespawn(false);
+                if (frames < FPS * 4) {
+                    movespawn();
+                } else if (frames >= FPS * 4 && frames < FPS * 32) {
+                    enemyhitenemy(3);
+                } else if (frames >= FPS * 32 && frames < FPS * 62) {
+                    enemyhitenemy(4);
+                } else if (frames >= FPS * 62 && frames < FPS * 92) {
+                    enemyhitenemy(5);
+                } else if (frames >= FPS * 92 && frames < FPS * 122) {
+                    enemyhitenemy(6);
+                } else if (frames >= FPS * 122 && frames < FPS * 152) {
+                    enemyhitenemy(7);
+                } else if (frames >= FPS * 152 && frames < FPS * 182) {
+                    enemyhitenemy(8);
+                } else if (frames >= FPS * 182 && frames < FPS * 212) {
+                    enemyhitenemy(9);
+                } else if (frames >= FPS * 212) {
+                    enemyhitenemy(10);
                 }
                 if (frames >= FPS * 4 && frames < FPS * 34) {
                     ballmovement(0, 3, frames);
                     playerhitenemy(3);
-                    enemyhitenemy(3);
                 } else if (frames >= FPS * 34 && frames < FPS * 64) {
                     ballmovement(3, 4, frames);
                     playerhitenemy(4);
-                    enemyhitenemy(4);
                 } else if (frames >= FPS * 64 && frames < FPS * 94) {
                     ballmovement(4, 5, frames);
                     playerhitenemy(5);
-                    enemyhitenemy(5);
                 } else if (frames >= FPS * 94 && frames < FPS * 124) {
                     ballmovement(5, 6, frames);
                     playerhitenemy(6);
-                    enemyhitenemy(6);
                 } else if (frames >= FPS * 124 && frames < FPS * 154) {
                     ballmovement(6, 7, frames);
                     playerhitenemy(7);
-                    enemyhitenemy(7);
                 } else if (frames >= FPS * 154 && frames < FPS * 184) {
                     ballmovement(7, 8, frames);
                     playerhitenemy(8);
-                    enemyhitenemy(8);
                 } else if (frames >= FPS * 184 && frames < FPS * 214) {
                     ballmovement(8, 9, frames);
                     playerhitenemy(9);
-                    enemyhitenemy(9);
                 } else if (frames >= FPS * 214) {
                     ballmovement(9, 10, frames);
                     playerhitenemy(10);
-                    enemyhitenemy(10);
                 }
+
             } else if (retry && gameover && playerstart) {
                 cloakbattery = (int) (FPS) * 5;
                 frames = 0;
@@ -366,6 +373,7 @@ public class Dodgeball extends JComponent implements KeyListener {
             quit = false;
         }
     }
+
     void spawnballs(int start, int outlines, int enemies, Graphics g) {
         for (int i = start; i < outlines; i++) {
             g.setColor(Color.BLACK);
@@ -472,9 +480,16 @@ public class Dodgeball extends JComponent implements KeyListener {
         }
     }
 
-    void movespawn(boolean first) {
-        if (first) {
-        } else {
+    void movespawn() {
+        for (int diff = 1; diff < 3; diff++) {
+            for (int i = 0; i < 3 - diff; i++) {
+                if (((enemyx[i] - enemyx[i + diff]) * (enemyx[i] - enemyx[i + diff])) + (((enemyy[i] - enemyy[i + diff]) * (enemyy[i] - enemyy[i + diff]))) < w * w) {
+                    for (int j = 0; j < 3; j++) {
+                        enemyx[j] = (int) (Math.random() * (WIDTH - w - 100)) + 50;
+                        enemyy[j] = (int) (Math.random() * (HEIGHT - h - 100)) + 50;
+                    }
+                }
+            }
         }
     }
 }
