@@ -1,32 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.*;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.*;
-import sun.audio.*;
-import java.io.*;
 
-/**
- *
- * @author simma1980
- */
-// make sure you rename this class if you are doing a copy/paste
 public class Dodgeball extends JComponent implements KeyListener {
-
     // Height and Width of our game
     //WIDTH must be at least 10* FPS
     //keep WIDTH and HEIGHT in aspect ratio of monitor
-    static final int WIDTH = 640;
-    static final int HEIGHT = 360;
+    static final int WIDTH = 853;
+    static final int HEIGHT = 480;
     // sets the framerate and delay for our game
     // you just need to select an appropriate framerate
     //FPS must be multiple of 20
@@ -114,10 +100,10 @@ public class Dodgeball extends JComponent implements KeyListener {
             g.drawString("Press Q to quit", WIDTH / 2 - 41, HEIGHT / 2 + 30);
         } else if (!playerstart) {
             g.drawString("Press ENTER to begin", WIDTH / 2 - 62, HEIGHT / 2 - 100);
-            g.drawString("Keep your ball", WIDTH / 4 - 37, HEIGHT / 2 - 4);
-            g.drawString("Away from these balls", WIDTH / 4 - 59, HEIGHT / 2 + w * 5 / 4);
+            g.drawString("Keep your ball", WIDTH / 4 - 37, HEIGHT / 2);
+            g.drawString("Away from these balls", WIDTH / 4 - 59, HEIGHT / 2 + (h * 15 / 10));
             g.setColor(Color.BLUE);
-            g.fillOval(WIDTH / 4 - w / 2, HEIGHT / 2, w, h);
+            g.fillOval(WIDTH / 4 - w / 2, HEIGHT / 2 + (h / 10), w, h);
             g.setColor(Color.RED);
             g.fillOval(WIDTH / 4 - w / 2 - 100, HEIGHT / 2 + w * 5 / 4, w, h);
             g.setColor(Color.GREEN);
@@ -157,7 +143,7 @@ public class Dodgeball extends JComponent implements KeyListener {
             // GAME LOGIC STARTS HERE
             if (!gameover && playerstart) {
                 frames++;
-                music();
+
                 if (up) {
                     if (cloak) {
                         y -= (int) (WIDTH / (FPS * 3));
@@ -375,14 +361,22 @@ public class Dodgeball extends JComponent implements KeyListener {
             g.drawOval(enemyx[i], enemyy[i], w, h);
         }
         for (int i = 0; i < enemies; i++) {
-            if (colors[i] == 0) {
-                g.setColor(Color.RED);
-            } else if (colors[i] == 1) {
-                g.setColor(Color.GREEN);
-            } else if (colors[i] == 2) {
-                g.setColor(Color.ORANGE);
+            if (frames < FPS * 244) {
+                if (colors[i] == 0) {
+                    g.setColor(Color.RED);
+                } else if (colors[i] == 1) {
+                    g.setColor(Color.GREEN);
+                } else if (colors[i] == 2) {
+                    g.setColor(Color.ORANGE);
+                } else if (colors[i] == 3) {
+                    g.setColor(Color.GRAY);
+                }
             } else {
-                g.setColor(Color.GRAY);
+                if (cloak && cloakbattery > 0) {
+                    g.setColor(Color.BLACK);
+                } else {
+                    g.setColor(Color.BLUE);
+                }
             }
             g.fillOval(enemyx[i], enemyy[i], w, h);
         }
@@ -437,12 +431,12 @@ public class Dodgeball extends JComponent implements KeyListener {
             if (enemyx[i] < 0) {
                 dx[i] = Math.abs(dx[i]);
             } else if (enemyx[i] > WIDTH - w) {
-                dx[i] = Math.abs(dx[i]) * -1;
+                dx[i] = -Math.abs(dx[i]);
             }
             if (enemyy[i] < 0) {
                 dy[i] = Math.abs(dy[i]);
             } else if (enemyy[i] > HEIGHT - w) {
-                dy[i] = Math.abs(dy[i]) * -1;
+                dy[i] = -Math.abs(dy[i]);
             }
         }
         for (int i = 0; i < enemies; i++) {
@@ -484,15 +478,5 @@ public class Dodgeball extends JComponent implements KeyListener {
                 enemyy[i] = (int) (Math.random() * (HEIGHT - h - 100)) + 50;
             }
         }
-    }
-    public static void music() {
-        AudioPlayer MGP = AudioPlayer.player;
-        ContinuousAudioDataStream loop = null;
-        try {
-        AudioStream BGM = new AudioStream(new FileInputStream("Dangerous.mp3"));
-        AudioData MD = BGM.getData();
-        loop = new ContinuousAudioDataStream(MD);
-        } catch (IOException error) {}
-        MGP.start(loop);
     }
 }
