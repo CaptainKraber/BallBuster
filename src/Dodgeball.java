@@ -101,9 +101,9 @@ public class Dodgeball extends JComponent implements KeyListener {
         } else if (!playerstart) {
             g.drawString("Press ENTER to begin", WIDTH / 2 - 62, HEIGHT / 2 - 100);
             g.drawString("Keep your ball", WIDTH / 4 - 37, HEIGHT / 2);
-            g.drawString("Away from these balls", WIDTH / 4 - 59, HEIGHT / 2 + (h * 15 / 10));
+            g.drawString("Away from these balls", WIDTH / 4 - 59, HEIGHT / 2 + (h * 9 / 5));
             g.setColor(Color.BLUE);
-            g.fillOval(WIDTH / 4 - w / 2, HEIGHT / 2 + (h / 10), w, h);
+            g.fillOval(WIDTH / 4 - w / 2, HEIGHT / 2 + (h / 4), w, h);
             g.setColor(Color.RED);
             g.fillOval(WIDTH / 4 - w / 2 - 100, HEIGHT / 2 + w * 5 / 4, w, h);
             g.setColor(Color.GREEN);
