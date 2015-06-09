@@ -11,8 +11,9 @@ public class Dodgeball extends JComponent implements KeyListener {
     // Height and Width of our game
     //WIDTH must be at least 10* FPS
     //keep WIDTH and HEIGHT in aspect ratio of monitor
-    static final int WIDTH = 853;
-    static final int HEIGHT = 480;
+
+    static final int WIDTH = 1280;
+    static final int HEIGHT = 720;
     // sets the framerate and delay for our game
     // you just need to select an appropriate framerate
     //FPS must be multiple of 20
@@ -22,7 +23,7 @@ public class Dodgeball extends JComponent implements KeyListener {
     //frames counts number of frames
     int cloakbattery = (int) (FPS) * 5, frames = 0, speed = (int) (WIDTH / (FPS * 1.5));
     //w, h, x, and y are player values respectively
-    int w = WIDTH / 20, h = w, x = WIDTH / 2 - w / 2, y = HEIGHT / 2 - h / 2;
+    int w = WIDTH / 23, h = w, x = WIDTH / 2 - w / 2, y = HEIGHT / 2 - h / 2;
     //up, down, right, left, and cloak control player changes respectively
     //done controls whether entire game quits
     //gameover controls whether or not to display gameover screen
@@ -45,37 +46,37 @@ public class Dodgeball extends JComponent implements KeyListener {
         //if the game hasn't ended draw player, enemies, cloakbar, and cloakbattery
         if (!gameover && playerstart) {
             if (frames >= FPS * 2 && frames < FPS * 4) {
-                spawnballs(0, 3, 0, g);
+                spawnballs(3, 0, g);
             } else if (frames >= FPS * 4 && frames < FPS * 32) {
-                spawnballs(0, 0, 3, g);
+                spawnballs(0, 3, g);
             } else if (frames >= FPS * 32 && frames < FPS * 34) {
-                spawnballs(3, 4, 3, g);
+                spawnballs(4, 3, g);
             } else if (frames >= FPS * 34 && frames < FPS * 62) {
-                spawnballs(0, 0, 4, g);
+                spawnballs(0, 4, g);
             } else if (frames >= FPS * 62 && frames < FPS * 64) {
-                spawnballs(4, 5, 4, g);
+                spawnballs(5, 4, g);
             } else if (frames >= FPS * 64 && frames < FPS * 92) {
-                spawnballs(0, 0, 5, g);
+                spawnballs(0, 5, g);
             } else if (frames >= FPS * 92 && frames < FPS * 94) {
-                spawnballs(5, 6, 5, g);
+                spawnballs(6, 5, g);
             } else if (frames >= FPS * 94 && frames < FPS * 122) {
-                spawnballs(0, 0, 6, g);
+                spawnballs(0, 6, g);
             } else if (frames >= FPS * 122 && frames < FPS * 124) {
-                spawnballs(6, 7, 6, g);
+                spawnballs(7, 6, g);
             } else if (frames >= FPS * 124 && frames < FPS * 152) {
-                spawnballs(0, 0, 7, g);
+                spawnballs(0, 7, g);
             } else if (frames >= FPS * 152 && frames < FPS * 154) {
-                spawnballs(7, 8, 7, g);
+                spawnballs(8, 7, g);
             } else if (frames >= FPS * 154 && frames < FPS * 182) {
-                spawnballs(0, 0, 8, g);
+                spawnballs(0, 8, g);
             } else if (frames >= FPS * 182 && frames < FPS * 184) {
-                spawnballs(8, 9, 8, g);
+                spawnballs(9, 8, g);
             } else if (frames >= FPS * 184 && frames < FPS * 212) {
-                spawnballs(0, 0, 9, g);
+                spawnballs(0, 9, g);
             } else if (frames >= FPS * 212 && frames < FPS * 214) {
-                spawnballs(9, 10, 9, g);
+                spawnballs(10, 9, g);
             } else if (frames >= FPS * 214) {
-                spawnballs(0, 0, 10, g);
+                spawnballs(0, 10, g);
             }
             //changes players colour when cloak is active and isn't empty   
             if (cloak && cloakbattery > 0) {
@@ -99,15 +100,34 @@ public class Dodgeball extends JComponent implements KeyListener {
             g.drawString("Press R to restart", WIDTH / 2 - 49, HEIGHT / 2 + 15);
             g.drawString("Press Q to quit", WIDTH / 2 - 41, HEIGHT / 2 + 30);
         } else if (!playerstart) {
-            g.drawString("Press ENTER to begin", WIDTH / 2 - 62, HEIGHT / 2 - 100);
+            g.drawString("Press ENTER to begin", WIDTH / 2 - 62, HEIGHT / 4);
             g.drawString("Keep your ball", WIDTH / 4 - 37, HEIGHT / 2);
-            g.drawString("Away from these balls", WIDTH / 4 - 59, HEIGHT / 2 + (h * 9 / 5));
+            g.drawString("Away from these balls", WIDTH / 4 - 59, HEIGHT / 2 + h * 9 / 5);
+            g.drawString("W", WIDTH * 3 / 4 - w / 3, HEIGHT / 2 - h * 2 / 3 - w);
+            g.drawString("A", WIDTH * 3 / 4 - w * 4 / 3, HEIGHT / 2 - h / -3 - w);
+            g.drawString("S", WIDTH * 3 / 4 - w / 3, HEIGHT / 2 - h / -3 - w);
+            g.drawString("D", WIDTH * 3 / 4 + w * 2 / 3, HEIGHT / 2 - h / -3 - w);
+            g.drawString("SHIFT", WIDTH * 3 / 4 - w * 4 / 3, HEIGHT / 2 - h / -3 + w);
+            g.drawString("Go up", WIDTH * 3 / 4 - w / 3, HEIGHT / 2 - w / 6 - w);
+            g.drawString("Go left", WIDTH * 3 / 4 - w * 4 / 3, HEIGHT / 2 + w * 5 / 6 - w);
+            g.drawString("Go down", WIDTH * 3 / 4 - w * 9 / 20, HEIGHT / 2 + w * 5 / 6 - w);
+            g.drawString("Go right", WIDTH * 3 / 4 + w * 10 / 16, HEIGHT / 2 + w * 5 / 6 - w);
+            g.drawString("Cloak", WIDTH * 3 / 4 - w * 4 / 3, HEIGHT / 2 - h / -3 + w * 3 / 2);
+            g.drawRoundRect(WIDTH * 3 / 4 - w / 2, HEIGHT / 2 - h - w, w, h, w / 6, w / 6);
+            g.drawRoundRect(WIDTH * 3 / 4 - w / 2, HEIGHT / 2 - w, w, h, w / 6, w / 6);
+            g.drawRoundRect(WIDTH * 3 / 4 - w * 3 / 2, HEIGHT / 2 - w, w, h, w / 6, w / 6);
+            g.drawRoundRect(WIDTH * 3 / 4 + w / 2 + 1, HEIGHT / 2 - w, w, h, w / 6, w / 6);
+            g.drawRoundRect(WIDTH * 3 / 4 - w * 3 / 2, HEIGHT / 2 + w, w * 3, h, w / 6, w / 6);
             g.setColor(Color.BLUE);
-            g.fillOval(WIDTH / 4 - w / 2, HEIGHT / 2 + (h / 4), w, h);
+            g.fillOval(WIDTH / 4 - w / 2, HEIGHT / 000002 + h / 4, w, h);
             g.setColor(Color.RED);
-            g.fillOval(WIDTH / 4 - w / 2 - 100, HEIGHT / 2 + w * 5 / 4, w, h);
+            g.fillOval(WIDTH / 4 - w * 11 / 4, HEIGHT / 2 + h * 2, w, h);
             g.setColor(Color.GREEN);
-            g.fillOval(WIDTH / 4 - w / 2 - 50, HEIGHT / 2 + 75, w, h);
+            g.fillOval(WIDTH / 4 - w * 05 / 4, HEIGHT / 2 + h * 2, w, h);
+            g.setColor(Color.ORANGE);
+            g.fillOval(WIDTH / 4 + w / 4, HEIGHT / 2 + h * 000002, w, h);
+            g.setColor(Color.GRAY);
+            g.fillOval(WIDTH / 4 + w * 7 / 04, HEIGHT / 2 + h * 2, w, h);
         }
         // GAME DRAWING ENDS HERE
     }
@@ -230,7 +250,7 @@ public class Dodgeball extends JComponent implements KeyListener {
             } else if (retry && gameover && playerstart) {
                 cloakbattery = (int) (FPS) * 5;
                 frames = 0;
-                w = WIDTH / 20;
+                w = WIDTH / 23;
                 h = w;
                 x = WIDTH / 2 - w / 2;
                 y = HEIGHT / 2 - h / 2;
@@ -355,8 +375,8 @@ public class Dodgeball extends JComponent implements KeyListener {
         }
     }
 
-    void spawnballs(int start, int outlines, int enemies, Graphics g) {
-        for (int i = start; i < outlines; i++) {
+    void spawnballs(int outlines, int enemies, Graphics g) {
+        for (int i = enemies; i < outlines; i++) {
             g.setColor(Color.BLACK);
             g.drawOval(enemyx[i], enemyy[i], w, h);
         }
