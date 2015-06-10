@@ -12,8 +12,8 @@ public class Dodgeball extends JComponent implements KeyListener {
     //WIDTH must be at least 10* FPS
     //keep WIDTH and HEIGHT in aspect ratio of monitor
 
-    static final int WIDTH = 1280;
-    static final int HEIGHT = 720;
+    static final int WIDTH = 1200;
+    static final int HEIGHT = 675;
     // sets the framerate and delay for our game
     // you just need to select an appropriate framerate
     //FPS must be multiple of 20
@@ -78,7 +78,7 @@ public class Dodgeball extends JComponent implements KeyListener {
             } else if (frames >= FPS * 214) {
                 spawnballs(0, 10, g);
             }
-            //changes players colour when cloak is active and isn't empty   
+            //changes players colour when cloak is active and isn't empty
             if (cloak && cloakbattery > 0) {
                 g.setColor(Color.BLACK);
             } else {
@@ -86,7 +86,7 @@ public class Dodgeball extends JComponent implements KeyListener {
             }
             //player
             g.fillOval(x, y, w, h);
-            //diplays percentage of battery remaining and charge meter 
+            //diplays percentage of battery remaining and charge meter
             g.setColor(Color.DARK_GRAY);
             g.drawString("Cloak Battery: " + cloakbattery / (FPS / 20) + "%", WIDTH / 2 - 55, HEIGHT - 20);
             g.fillRect((WIDTH - ((int) (FPS) * 10)) / 2, HEIGHT - 15, cloakbattery * 2, 10);
@@ -101,23 +101,23 @@ public class Dodgeball extends JComponent implements KeyListener {
             g.drawString("Press Q to quit", WIDTH / 2 - 41, HEIGHT / 2 + 30);
         } else if (!playerstart) {
             g.drawString("Press ENTER to begin", WIDTH / 2 - 62, HEIGHT / 4);
-            g.drawString("Keep your ball", WIDTH / 4 - 37, HEIGHT / 2);
+            g.drawString("Keep your ball", WIDTH / 4 - 40, HEIGHT / 2);
             g.drawString("Away from these balls", WIDTH / 4 - 59, HEIGHT / 2 + h * 9 / 5);
-            g.drawString("W", WIDTH * 3 / 4 - w / 3, HEIGHT / 2 - h * 2 / 3 - w);
-            g.drawString("A", WIDTH * 3 / 4 - w * 4 / 3, HEIGHT / 2 - h / -3 - w);
+            g.drawString("W", WIDTH * 3 / 4 - w / 3 - w / 4, HEIGHT / 2 - h * 2 / 3 - w - w / 4);
+            g.drawString("A", WIDTH * 3 / 4 - w * 4 / 3 - w / 4, HEIGHT / 2 - h / -3 - w);
             g.drawString("S", WIDTH * 3 / 4 - w / 3, HEIGHT / 2 - h / -3 - w);
-            g.drawString("D", WIDTH * 3 / 4 + w * 2 / 3, HEIGHT / 2 - h / -3 - w);
-            g.drawString("SHIFT", WIDTH * 3 / 4 - w * 4 / 3, HEIGHT / 2 - h / -3 + w);
-            g.drawString("Go up", WIDTH * 3 / 4 - w / 3, HEIGHT / 2 - w / 6 - w);
-            g.drawString("Go left", WIDTH * 3 / 4 - w * 4 / 3, HEIGHT / 2 + w * 5 / 6 - w);
+            g.drawString("D", WIDTH * 3 / 4 + w * 2 / 3 + w / 4, HEIGHT / 2 - h / -3 - w);
+            g.drawString("SPACE", WIDTH * 3 / 4 - w * 25 / 9, HEIGHT / 2 - h / -3 + w);
+            g.drawString("Go up", WIDTH * 3 / 4 - w / 3 - w / 4, HEIGHT / 2 - w / 6 - w - w / 4);
+            g.drawString("Go left", WIDTH * 3 / 4 - w * 4 / 3 - w / 4, HEIGHT / 2 + w * 5 / 6 - w);
             g.drawString("Go down", WIDTH * 3 / 4 - w * 9 / 20, HEIGHT / 2 + w * 5 / 6 - w);
-            g.drawString("Go right", WIDTH * 3 / 4 + w * 10 / 16, HEIGHT / 2 + w * 5 / 6 - w);
-            g.drawString("Cloak", WIDTH * 3 / 4 - w * 4 / 3, HEIGHT / 2 - h / -3 + w * 3 / 2);
-            g.drawRoundRect(WIDTH * 3 / 4 - w / 2, HEIGHT / 2 - h - w, w, h, w / 6, w / 6);
-            g.drawRoundRect(WIDTH * 3 / 4 - w / 2, HEIGHT / 2 - w, w, h, w / 6, w / 6);
-            g.drawRoundRect(WIDTH * 3 / 4 - w * 3 / 2, HEIGHT / 2 - w, w, h, w / 6, w / 6);
-            g.drawRoundRect(WIDTH * 3 / 4 + w / 2 + 1, HEIGHT / 2 - w, w, h, w / 6, w / 6);
-            g.drawRoundRect(WIDTH * 3 / 4 - w * 3 / 2, HEIGHT / 2 + w, w * 3, h, w / 6, w / 6);
+            g.drawString("Go right", WIDTH * 3 / 4 + w * 10 / 16 + w / 4, HEIGHT / 2 + w * 5 / 6 - w);
+            g.drawString("Cloak", WIDTH * 3 / 4 - w * 25 / 9, HEIGHT / 2 - h / -3 + w * 3 / 2);
+            g.drawRoundRect(WIDTH * 3 / 4 - w / 2 - w / 4, HEIGHT / 2 - h - w - w / 4, w, h, w / 5, w / 5);
+            g.drawRoundRect(WIDTH * 3 / 4 - w / 2, HEIGHT / 2 - w, w, h, w / 5, w / 5);
+            g.drawRoundRect(WIDTH * 3 / 4 - w * 3 / 2 - w / 4, HEIGHT / 2 - w, w, h, w / 5, w / 5);
+            g.drawRoundRect(WIDTH * 3 / 4 + w / 2 + 1 + w / 4, HEIGHT / 2 - w, w, h, w / 5, w / 5);
+            g.drawRoundRect(WIDTH * 3 / 4 - w * 3, HEIGHT / 2 + w, w * 6, h, w / 5, w / 5);
             g.setColor(Color.BLUE);
             g.fillOval(WIDTH / 4 - w / 2, HEIGHT / 000002 + h / 4, w, h);
             g.setColor(Color.RED);
@@ -163,7 +163,6 @@ public class Dodgeball extends JComponent implements KeyListener {
             // GAME LOGIC STARTS HERE
             if (!gameover && playerstart) {
                 frames++;
-
                 if (up) {
                     if (cloak) {
                         y -= (int) (WIDTH / (FPS * 3));
@@ -215,37 +214,23 @@ public class Dodgeball extends JComponent implements KeyListener {
                 if (frames >= 0 && frames < FPS * 2) {
                     movespawn();
                 } else if (frames >= FPS * 4 && frames < FPS * 34) {
-                    ballmovement(0, 3, frames);
-                    playerhitenemy(3);
-                    enemyhitenemy(3);
+                    one_function_to_rule_them_all(1);
+                    one_function_to_rule_them_all(2);
+                    one_function_to_rule_them_all(3);
                 } else if (frames >= FPS * 34 && frames < FPS * 64) {
-                    ballmovement(3, 4, frames);
-                    playerhitenemy(4);
-                    enemyhitenemy(4);
+                    one_function_to_rule_them_all(4);
                 } else if (frames >= FPS * 64 && frames < FPS * 94) {
-                    ballmovement(4, 5, frames);
-                    playerhitenemy(5);
-                    enemyhitenemy(5);
+                    one_function_to_rule_them_all(5);
                 } else if (frames >= FPS * 94 && frames < FPS * 124) {
-                    ballmovement(5, 6, frames);
-                    playerhitenemy(6);
-                    enemyhitenemy(6);
+                    one_function_to_rule_them_all(6);
                 } else if (frames >= FPS * 124 && frames < FPS * 154) {
-                    ballmovement(6, 7, frames);
-                    playerhitenemy(7);
-                    enemyhitenemy(7);
+                    one_function_to_rule_them_all(7);
                 } else if (frames >= FPS * 154 && frames < FPS * 184) {
-                    ballmovement(7, 8, frames);
-                    playerhitenemy(8);
-                    enemyhitenemy(8);
+                    one_function_to_rule_them_all(8);
                 } else if (frames >= FPS * 184 && frames < FPS * 214) {
-                    ballmovement(8, 9, frames);
-                    playerhitenemy(9);
-                    enemyhitenemy(9);
+                    one_function_to_rule_them_all(9);
                 } else if (frames >= FPS * 214) {
-                    ballmovement(9, 10, frames);
-                    playerhitenemy(10);
-                    enemyhitenemy(10);
+                    one_function_to_rule_them_all(10);
                 }
             } else if (retry && gameover && playerstart) {
                 cloakbattery = (int) (FPS) * 5;
@@ -321,25 +306,25 @@ public class Dodgeball extends JComponent implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int k = e.getKeyCode();
-        if (k == KeyEvent.VK_W || k == KeyEvent.VK_UP) {
+        if (k == KeyEvent.VK_W) {
             up = true;
-        } else if (k == KeyEvent.VK_S || k == KeyEvent.VK_DOWN) {
+        } else if (k == KeyEvent.VK_S) {
             down = true;
         }
-        if (k == KeyEvent.VK_A || k == KeyEvent.VK_LEFT) {
+        if (k == KeyEvent.VK_A) {
             left = true;
-        } else if (k == KeyEvent.VK_D || k == KeyEvent.VK_RIGHT) {
+        } else if (k == KeyEvent.VK_D) {
             right = true;
         }
-        if (k == KeyEvent.VK_SHIFT || k == KeyEvent.VK_INSERT) {
+        if (k == KeyEvent.VK_SPACE) {
             cloak = true;
             enter = false;
             backspace = false;
         }
-        if (k == KeyEvent.VK_R || k == KeyEvent.VK_CONTROL) {
+        if (k == KeyEvent.VK_R) {
             retry = true;
         }
-        if (k == KeyEvent.VK_Q || k == KeyEvent.VK_END) {
+        if (k == KeyEvent.VK_Q) {
             quit = true;
         }
         if (k == KeyEvent.VK_ENTER) {
@@ -354,23 +339,23 @@ public class Dodgeball extends JComponent implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         int k = e.getKeyCode();
-        if (k == KeyEvent.VK_W || k == KeyEvent.VK_UP) {
+        if (k == KeyEvent.VK_W) {
             up = false;
-        } else if (k == KeyEvent.VK_S || k == KeyEvent.VK_DOWN) {
+        } else if (k == KeyEvent.VK_S) {
             down = false;
         }
-        if (k == KeyEvent.VK_A || k == KeyEvent.VK_LEFT) {
+        if (k == KeyEvent.VK_A) {
             left = false;
-        } else if (k == KeyEvent.VK_D || k == KeyEvent.VK_RIGHT) {
+        } else if (k == KeyEvent.VK_D) {
             right = false;
         }
-        if (k == KeyEvent.VK_SHIFT || k == KeyEvent.VK_INSERT) {
+        if (k == KeyEvent.VK_SPACE) {
             cloak = false;
         }
-        if (k == KeyEvent.VK_R || k == KeyEvent.VK_CONTROL) {
+        if (k == KeyEvent.VK_R) {
             retry = false;
         }
-        if (k == KeyEvent.VK_Q || k == KeyEvent.VK_END) {
+        if (k == KeyEvent.VK_Q) {
             quit = false;
         }
     }
@@ -401,8 +386,46 @@ public class Dodgeball extends JComponent implements KeyListener {
             g.fillOval(enemyx[i], enemyy[i], w, h);
         }
     }
+    void movespawn() {
+        while (((enemyx[0] - enemyx[1]) * (enemyx[0] - enemyx[1])) + ((enemyy[0] - enemyy[1]) * (enemyx[0] - enemyx[1])) < w * w || ((enemyx[0] - enemyx[2]) * (enemyx[0] - enemyx[2])) + ((enemyy[0] - enemyy[2]) * (enemyx[0] - enemyx[2])) < w * w || ((enemyx[1] - enemyx[2]) * (enemyx[1] - enemyx[2])) + ((enemyy[1] - enemyy[2]) * (enemyx[1] - enemyx[2])) < w * w) {
+            for (int i = 0; i < 3; i++) {
+                enemyx[i] = (int) (Math.random() * (WIDTH - w - 100)) + 50;
+            }
+            for (int i = 0; i < 3; i++) {
+                enemyy[i] = (int) (Math.random() * (HEIGHT - h - 100)) + 50;
+            }
+        }
+    }
 
-    void ballmovement(int start, int enemies, int frames) {
+    boolean one_function_to_rule_them_all(int start) {
+        for (int diff = 1; diff < start; diff++) {
+            for (int i = 0; i < start - diff; i++) {
+                if (((enemyx[i] - enemyx[i + diff]) * (enemyx[i] - enemyx[i + diff])) + (((enemyy[i] - enemyy[i + diff]) * (enemyy[i] - enemyy[i + diff]))) < w * w) {
+                    dx[i] = dx[i] + dx[i + diff];
+                    dx[i + diff] = dx[i] - dx[i + diff];
+                    dx[i] = dx[i] - dx[i + diff];
+                    dy[i] = dy[i] + dy[i + diff];
+                    dy[i + diff] = dy[i] - dy[i + diff];
+                    dy[i] = dy[i] - dy[i + diff];
+                }
+            }
+        }
+        for (int i = 0; i < start; i++) {
+            if (enemyx[i] < 0) {
+                dx[i] = Math.abs(dx[i]);
+            } else if (enemyx[i] > WIDTH - w) {
+                dx[i] = -Math.abs(dx[i]);
+            }
+            if (enemyy[i] < 0) {
+                dy[i] = Math.abs(dy[i]);
+            } else if (enemyy[i] > HEIGHT - w) {
+                dy[i] = -Math.abs(dy[i]);
+            }
+        }
+        for (int i = 0; i < start; i++) {
+            enemyx[i] += dx[i];
+            enemyy[i] += dy[i];
+        }
         int starttime = 0;
         if (frames == FPS * 4) {
             starttime = 4;
@@ -421,7 +444,7 @@ public class Dodgeball extends JComponent implements KeyListener {
         } else if (frames == FPS * 214) {
             starttime = 214;
         }
-        for (int i = start; i < enemies && frames == FPS * starttime; i++) {
+        for (int i = start - 1; i == start - 1 && frames == FPS * starttime; i++) {
             for (int j = 0; j < speed; j++) {
                 if (directions[i] == j) {
                     dx[i] = ((int) (WIDTH / (FPS * 1.5))) - j;
@@ -447,56 +470,11 @@ public class Dodgeball extends JComponent implements KeyListener {
                 }
             }
         }
-        for (int i = 0; i < enemies; i++) {
-            if (enemyx[i] < 0) {
-                dx[i] = Math.abs(dx[i]);
-            } else if (enemyx[i] > WIDTH - w) {
-                dx[i] = -Math.abs(dx[i]);
-            }
-            if (enemyy[i] < 0) {
-                dy[i] = Math.abs(dy[i]);
-            } else if (enemyy[i] > HEIGHT - w) {
-                dy[i] = -Math.abs(dy[i]);
-            }
-        }
-        for (int i = 0; i < enemies; i++) {
-            enemyx[i] += dx[i];
-            enemyy[i] += dy[i];
-        }
-    }
-
-    boolean playerhitenemy(int enemies) {
-        for (int i = 0; i < enemies; i++) {
+        for (int i = 0; i < start; i++) {
             if ((!cloak || cloakbattery == 0 && cloak) && ((x - enemyx[i]) * (x - enemyx[i])) + ((y - enemyy[i]) * (y - enemyy[i])) < w * w) {
                 return gameover = true;
             }
         }
         return gameover = false;
-    }
-
-    void enemyhitenemy(int balls) {
-        for (int diff = 1; diff < balls; diff++) {
-            for (int i = 0; i < balls - diff; i++) {
-                if (((enemyx[i] - enemyx[i + diff]) * (enemyx[i] - enemyx[i + diff])) + (((enemyy[i] - enemyy[i + diff]) * (enemyy[i] - enemyy[i + diff]))) < w * w) {
-                    dx[i] = dx[i] + dx[i + diff];
-                    dx[i + diff] = dx[i] - dx[i + diff];
-                    dx[i] = dx[i] - dx[i + diff];
-                    dy[i] = dy[i] + dy[i + diff];
-                    dy[i + diff] = dy[i] - dy[i + diff];
-                    dy[i] = dy[i] - dy[i + diff];
-                }
-            }
-        }
-    }
-
-    void movespawn() {
-        while (((enemyx[0] - enemyx[1]) * (enemyx[0] - enemyx[1])) + ((enemyy[0] - enemyy[1]) * (enemyx[0] - enemyx[1])) < w * w || ((enemyx[0] - enemyx[2]) * (enemyx[0] - enemyx[2])) + ((enemyy[0] - enemyy[2]) * (enemyx[0] - enemyx[2])) < w * w || ((enemyx[1] - enemyx[2]) * (enemyx[1] - enemyx[2])) + ((enemyy[1] - enemyy[2]) * (enemyx[1] - enemyx[2])) < w * w) {
-            for (int i = 0; i < 3; i++) {
-                enemyx[i] = (int) (Math.random() * (WIDTH - w - 100)) + 50;
-            }
-            for (int i = 0; i < 3; i++) {
-                enemyy[i] = (int) (Math.random() * (HEIGHT - h - 100)) + 50;
-            }
-        }
     }
 }
