@@ -4,6 +4,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
@@ -23,7 +26,7 @@ public class Dodgeball extends JComponent implements KeyListener {
     //frames counts number of frames
     int cloakbattery = (int) (FPS) * 5, frames = 0, speed = (int) (WIDTH / (FPS * 1.5));
     //w, h, x, and y are player values respectively
-    int w = WIDTH / 23, h = w, x = WIDTH / 2 - w / 2, y = HEIGHT / 2 - h / 2;
+    int w = WIDTH / 25, h = w, x = WIDTH / 2 - w / 2, y = HEIGHT / 2 - h / 2;
     //up, down, right, left, and cloak control player changes respectively
     //done controls whether entire game quits
     //gameover controls whether or not to display gameover screen
@@ -161,7 +164,7 @@ public class Dodgeball extends JComponent implements KeyListener {
 
             // all your game rules and move is done in here
             // GAME LOGIC STARTS HERE
-            if (!gameover && playerstart) {
+            if (!gameover && playerstart) {      
                 frames++;
                 if (up) {
                     if (cloak) {
@@ -214,28 +217,26 @@ public class Dodgeball extends JComponent implements KeyListener {
                 if (frames >= 0 && frames < FPS * 2) {
                     movespawn();
                 } else if (frames >= FPS * 4 && frames < FPS * 34) {
-                    one_function_to_rule_them_all(1);
-                    one_function_to_rule_them_all(2);
-                    one_function_to_rule_them_all(3);
+                    gamemethod(0, 3);
                 } else if (frames >= FPS * 34 && frames < FPS * 64) {
-                    one_function_to_rule_them_all(4);
+                    gamemethod(3, 4);
                 } else if (frames >= FPS * 64 && frames < FPS * 94) {
-                    one_function_to_rule_them_all(5);
+                    gamemethod(4, 5);
                 } else if (frames >= FPS * 94 && frames < FPS * 124) {
-                    one_function_to_rule_them_all(6);
+                    gamemethod(5, 6);
                 } else if (frames >= FPS * 124 && frames < FPS * 154) {
-                    one_function_to_rule_them_all(7);
+                    gamemethod(6, 7);
                 } else if (frames >= FPS * 154 && frames < FPS * 184) {
-                    one_function_to_rule_them_all(8);
+                    gamemethod(7, 8);
                 } else if (frames >= FPS * 184 && frames < FPS * 214) {
-                    one_function_to_rule_them_all(9);
+                    gamemethod(8, 9);
                 } else if (frames >= FPS * 214) {
-                    one_function_to_rule_them_all(10);
+                    gamemethod(9, 10);
                 }
             } else if (retry && gameover && playerstart) {
                 cloakbattery = (int) (FPS) * 5;
                 frames = 0;
-                w = WIDTH / 23;
+                w = WIDTH / 15;
                 h = w;
                 x = WIDTH / 2 - w / 2;
                 y = HEIGHT / 2 - h / 2;
@@ -386,6 +387,7 @@ public class Dodgeball extends JComponent implements KeyListener {
             g.fillOval(enemyx[i], enemyy[i], w, h);
         }
     }
+
     void movespawn() {
         while (((enemyx[0] - enemyx[1]) * (enemyx[0] - enemyx[1])) + ((enemyy[0] - enemyy[1]) * (enemyx[0] - enemyx[1])) < w * w || ((enemyx[0] - enemyx[2]) * (enemyx[0] - enemyx[2])) + ((enemyy[0] - enemyy[2]) * (enemyx[0] - enemyx[2])) < w * w || ((enemyx[1] - enemyx[2]) * (enemyx[1] - enemyx[2])) + ((enemyy[1] - enemyy[2]) * (enemyx[1] - enemyx[2])) < w * w) {
             for (int i = 0; i < 3; i++) {
@@ -397,36 +399,9 @@ public class Dodgeball extends JComponent implements KeyListener {
         }
     }
 
-    boolean one_function_to_rule_them_all(int start) {
-        for (int diff = 1; diff < start; diff++) {
-            for (int i = 0; i < start - diff; i++) {
-                if (((enemyx[i] - enemyx[i + diff]) * (enemyx[i] - enemyx[i + diff])) + (((enemyy[i] - enemyy[i + diff]) * (enemyy[i] - enemyy[i + diff]))) < w * w) {
-                    dx[i] = dx[i] + dx[i + diff];
-                    dx[i + diff] = dx[i] - dx[i + diff];
-                    dx[i] = dx[i] - dx[i + diff];
-                    dy[i] = dy[i] + dy[i + diff];
-                    dy[i + diff] = dy[i] - dy[i + diff];
-                    dy[i] = dy[i] - dy[i + diff];
-                }
-            }
-        }
-        for (int i = 0; i < start; i++) {
-            if (enemyx[i] < 0) {
-                dx[i] = Math.abs(dx[i]);
-            } else if (enemyx[i] > WIDTH - w) {
-                dx[i] = -Math.abs(dx[i]);
-            }
-            if (enemyy[i] < 0) {
-                dy[i] = Math.abs(dy[i]);
-            } else if (enemyy[i] > HEIGHT - w) {
-                dy[i] = -Math.abs(dy[i]);
-            }
-        }
-        for (int i = 0; i < start; i++) {
-            enemyx[i] += dx[i];
-            enemyy[i] += dy[i];
-        }
+    boolean gamemethod(int start, int end) {
         int starttime = 0;
+        boolean onespawn = false, twospawn = false, threespawn = false, fourspawn = false, fivespawn = false, sixspawn = false, sevenspaw = false, eightspawn = false;
         if (frames == FPS * 4) {
             starttime = 4;
         } else if (frames == FPS * 34) {
@@ -444,7 +419,7 @@ public class Dodgeball extends JComponent implements KeyListener {
         } else if (frames == FPS * 214) {
             starttime = 214;
         }
-        for (int i = start - 1; i == start - 1 && frames == FPS * starttime; i++) {
+        for (int i = start; i < end && frames > FPS * starttime; i++) {
             for (int j = 0; j < speed; j++) {
                 if (directions[i] == j) {
                     dx[i] = ((int) (WIDTH / (FPS * 1.5))) - j;
@@ -470,7 +445,35 @@ public class Dodgeball extends JComponent implements KeyListener {
                 }
             }
         }
-        for (int i = 0; i < start; i++) {
+        for (int diff = 1; diff < end; diff++) {
+            for (int i = 0; i < end - diff; i++) {
+                if (((enemyx[i] - enemyx[i + diff]) * (enemyx[i] - enemyx[i + diff])) + (((enemyy[i] - enemyy[i + diff]) * (enemyy[i] - enemyy[i + diff]))) < w * w) {
+                    dx[i] = dx[i] + dx[i + diff];
+                    dx[i + diff] = dx[i] - dx[i + diff];
+                    dx[i] = dx[i] - dx[i + diff];
+                    dy[i] = dy[i] + dy[i + diff];
+                    dy[i + diff] = dy[i] - dy[i + diff];
+                    dy[i] = dy[i] - dy[i + diff];
+                }
+            }
+        }
+        for (int i = 0; i < end; i++) {
+            if (enemyx[i] < 0) {
+                dx[i] = Math.abs(dx[i]);
+            } else if (enemyx[i] > WIDTH - w) {
+                dx[i] = -Math.abs(dx[i]);
+            }
+            if (enemyy[i] < 0) {
+                dy[i] = Math.abs(dy[i]);
+            } else if (enemyy[i] > HEIGHT - w) {
+                dy[i] = -Math.abs(dy[i]);
+            }
+        }
+        for (int i = 0; i < end; i++) {
+            enemyx[i] += dx[i];
+            enemyy[i] += dy[i];
+        }
+        for (int i = 0; i < end; i++) {
             if ((!cloak || cloakbattery == 0 && cloak) && ((x - enemyx[i]) * (x - enemyx[i])) + ((y - enemyy[i]) * (y - enemyy[i])) < w * w) {
                 return gameover = true;
             }
