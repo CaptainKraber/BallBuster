@@ -15,8 +15,8 @@ public class Dodgeball extends JComponent implements KeyListener {
     //WIDTH must be at least 10* FPS
     //keep WIDTH and HEIGHT in aspect ratio of monitor
 
-    static final int WIDTH = 1200;
-    static final int HEIGHT = 675;
+    static final int WIDTH = 640;
+    static final int HEIGHT = 360;
     // sets the framerate and delay for our game
     // you just need to select an appropriate framerate
     //FPS must be multiple of 20
@@ -31,6 +31,7 @@ public class Dodgeball extends JComponent implements KeyListener {
     //done controls whether entire game quits
     //gameover controls whether or not to display gameover screen
     //retry resets variables to default when pressed and game is over
+    boolean[] spawned = new boolean[10];
     boolean up = false, down = false, right = false, left = false, cloak = false, done = false, retry = false, gameover = false, quit = false, enter = false, backspace = false, playerstart = false;
     //colors holds 10 random numbers dictating each balls color for 10 different balls each game
     //directions holds 10 random numbers dictating each balls direction for 10 different balls each game
@@ -50,10 +51,14 @@ public class Dodgeball extends JComponent implements KeyListener {
         if (!gameover && playerstart) {
             if (frames >= FPS * 2 && frames < FPS * 4) {
                 spawnballs(3, 0, g);
+                g.drawString("Level 1", WIDTH / 2 - 18, HEIGHT / 4);
+                g.drawString("Let the fun begin!", WIDTH / 2 - 43, HEIGHT / 4 + 25);
             } else if (frames >= FPS * 4 && frames < FPS * 32) {
                 spawnballs(0, 3, g);
             } else if (frames >= FPS * 32 && frames < FPS * 34) {
                 spawnballs(4, 3, g);
+                g.drawString("Level 2", WIDTH / 2 - 18, HEIGHT / 4);
+                g.drawString("Better get used to more coming...", WIDTH / 2 - 70, HEIGHT / 4 + 25);
             } else if (frames >= FPS * 34 && frames < FPS * 62) {
                 spawnballs(0, 4, g);
             } else if (frames >= FPS * 62 && frames < FPS * 64) {
@@ -158,13 +163,16 @@ public class Dodgeball extends JComponent implements KeyListener {
         for (int i = 0; i < 10; i++) {
             enemyy[i] = (int) (Math.random() * (HEIGHT - h - (2 * h))) + h;
         }
+        for (int i = 0; i < 10; i++) {
+            spawned[i] = false;
+        }
         while (!done) {
             // determines when we started so we can keep a framerate
             startTime = System.currentTimeMillis();
 
             // all your game rules and move is done in here
             // GAME LOGIC STARTS HERE
-            if (!gameover && playerstart) {      
+            if (!gameover && playerstart) {
                 frames++;
                 if (up) {
                     if (cloak) {
@@ -217,26 +225,26 @@ public class Dodgeball extends JComponent implements KeyListener {
                 if (frames >= 0 && frames < FPS * 2) {
                     movespawn();
                 } else if (frames >= FPS * 4 && frames < FPS * 34) {
-                    gamemethod(0, 3);
+                    one_method_to_rule_them_all(0, 3);
                 } else if (frames >= FPS * 34 && frames < FPS * 64) {
-                    gamemethod(3, 4);
+                    one_method_to_rule_them_all(3, 4);
                 } else if (frames >= FPS * 64 && frames < FPS * 94) {
-                    gamemethod(4, 5);
+                    one_method_to_rule_them_all(4, 5);
                 } else if (frames >= FPS * 94 && frames < FPS * 124) {
-                    gamemethod(5, 6);
+                    one_method_to_rule_them_all(5, 6);
                 } else if (frames >= FPS * 124 && frames < FPS * 154) {
-                    gamemethod(6, 7);
+                    one_method_to_rule_them_all(6, 7);
                 } else if (frames >= FPS * 154 && frames < FPS * 184) {
-                    gamemethod(7, 8);
+                    one_method_to_rule_them_all(7, 8);
                 } else if (frames >= FPS * 184 && frames < FPS * 214) {
-                    gamemethod(8, 9);
+                    one_method_to_rule_them_all(8, 9);
                 } else if (frames >= FPS * 214) {
-                    gamemethod(9, 10);
+                    one_method_to_rule_them_all(9, 10);
                 }
             } else if (retry && gameover && playerstart) {
                 cloakbattery = (int) (FPS) * 5;
                 frames = 0;
-                w = WIDTH / 15;
+                w = WIDTH / 25;
                 h = w;
                 x = WIDTH / 2 - w / 2;
                 y = HEIGHT / 2 - h / 2;
@@ -252,6 +260,9 @@ public class Dodgeball extends JComponent implements KeyListener {
                 }
                 for (int i = 0; i < 10; i++) {
                     enemyy[i] = (int) (Math.random() * (HEIGHT - h - 100)) + 50;
+                }
+                for (int i = 0; i < 10; i++) {
+                    spawned[i] = false;
                 }
             } else if (quit && gameover && playerstart) {
                 System.exit(0);
@@ -399,27 +410,19 @@ public class Dodgeball extends JComponent implements KeyListener {
         }
     }
 
-    boolean gamemethod(int start, int end) {
-        int starttime = 0;
-        boolean onespawn = false, twospawn = false, threespawn = false, fourspawn = false, fivespawn = false, sixspawn = false, sevenspaw = false, eightspawn = false;
-        if (frames == FPS * 4) {
-            starttime = 4;
-        } else if (frames == FPS * 34) {
-            starttime = 34;
-        } else if (frames == FPS * 64) {
-            starttime = 64;
-        } else if (frames == FPS * 94) {
-            starttime = 94;
-        } else if (frames == FPS * 124) {
-            starttime = 124;
-        } else if (frames == FPS * 154) {
-            starttime = 154;
-        } else if (frames == FPS * 184) {
-            starttime = 184;
-        } else if (frames == FPS * 214) {
-            starttime = 214;
-        }
-        for (int i = start; i < end && frames > FPS * starttime; i++) {
+    boolean one_method_to_rule_them_all(int start, int end) {
+        int[] time = new int[10];
+        time[0] = 4;
+        time[1] = 4;
+        time[2] = 4;
+        time[3] = 34;
+        time[4] = 64;
+        time[5] = 94;
+        time[6] = 124;
+        time[7] = 154;
+        time[8] = 184;
+        time[9] = 214;
+        for (int i = start; i < end && frames >= FPS * time[i] && !spawned[i]; i++) {
             for (int j = 0; j < speed; j++) {
                 if (directions[i] == j) {
                     dx[i] = ((int) (WIDTH / (FPS * 1.5))) - j;
@@ -444,6 +447,7 @@ public class Dodgeball extends JComponent implements KeyListener {
                     dy[i] = (-1 * ((int) (WIDTH / (FPS * 1.5)))) + j;
                 }
             }
+            spawned[i] = true;
         }
         for (int diff = 1; diff < end; diff++) {
             for (int i = 0; i < end - diff; i++) {
